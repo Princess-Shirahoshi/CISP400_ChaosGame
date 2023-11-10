@@ -9,12 +9,35 @@
 using namespace sf;
 using namespace std;
 
+Font font;
+    if (!font.loadFromFile("MetroidFont.ttf")) {
+        // Displays message to user if font doesn't load
+        cout << "Error loading font!" << endl;
+        // returns error and exits program
+        return -1;
+    }
+
+    Text text;
+
+    text.setFont(font);
+    text.setCharacterSize(24); //sets text size
+    text.setFillColor(Color::White); // sets text color
+    text.setPosition(10, 10); //positions text
+
+    Text titleText;
+    
+    titleText.setFont(font);
+    titleText.setCharacterSize(50);
+    titleText.setFillColor(Color::Red);
+    titleText.setPosition(10, 10);
+    titleText.setString("Chaos Game"); //adds title screen 
+
 int main()
 {
     // Create a video mode object
 	VideoMode vm(1920, 1080);
 	// Create and open a window for the game
-	RenderWindow window(vm, "Timber Game!!", Style::Default);
+	RenderWindow window(vm, "Chaos Game!!", Style::Default);
 
     vector<Vector2f> vertices;
     vector<Vector2f> points;
@@ -85,6 +108,9 @@ int main()
             rect.setFillColor(Color::Blue);
             window.draw(rect);
         }
+
+        window.draw(titleText);
+        
         window.display();
     }
 }

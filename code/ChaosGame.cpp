@@ -9,7 +9,17 @@
 using namespace sf;
 using namespace std;
 
-Font font;
+int main()
+{
+    // Create a video mode object
+	VideoMode vm(1920, 1080);
+	// Create and open a window for the game
+	RenderWindow window(vm, "Chaos Game!!", Style::Default);
+
+    vector<Vector2f> vertices;
+    vector<Vector2f> points;
+
+        Font font;
     if (!font.loadFromFile("MetroidFont.ttf")) {
         // Displays message to user if font doesn't load
         cout << "Error loading font!" << endl;
@@ -30,17 +40,7 @@ Font font;
     titleText.setCharacterSize(50);
     titleText.setFillColor(Color::Red);
     titleText.setPosition(10, 10);
-    titleText.setString("Chaos Game"); //adds title screen 
-
-int main()
-{
-    // Create a video mode object
-	VideoMode vm(1920, 1080);
-	// Create and open a window for the game
-	RenderWindow window(vm, "Chaos Game!!", Style::Default);
-
-    vector<Vector2f> vertices;
-    vector<Vector2f> points;
+    titleText.setString("Chaos Game");
 
 	while (window.isOpen())
 	{
@@ -110,7 +110,7 @@ int main()
         }
 
         window.draw(titleText);
-        
+
         window.display();
     }
 }

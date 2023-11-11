@@ -136,9 +136,9 @@ int main()
 
             int randomSelection = uniform_dist(generator);
             //Vector2f generate_more_points = vertices[its_over_9000]; // generate the points 
-            Vector2f pick_random_vertex = vertices[picking_random_vertex]; // picks a random location 
+            Vector2f pick_random_vertex = vertices[randomSelection]; // picks a random location 
             Vector2f last_point = points.back();    // gets the last element of a vector     
-            Vector2f calculate_midpoint = (pick_random_vertex / last_point) / 2; // finds the midpoint 
+            Vector2f calculate_midpoint = (pick_random_vertex + last_point) / 2.0f; // finds the midpoint 
             points.push_back(calculate_midpoint);
 
             ///calculate midpoint between random vertex and the last point in the vector

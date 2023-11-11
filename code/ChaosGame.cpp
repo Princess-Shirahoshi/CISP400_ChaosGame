@@ -122,29 +122,7 @@ int main()
                 }
             }
         }
-        if (Keyboard::isKeyPressed(Keyboard::Escape))
-		{
-			window.close();
-		}
-        /*
-		****************************************
-		Update
-		****************************************
-		*/
-        if(points.size() > 0)
-        {
 
-            int randomSelection = uniform_dist(generator);
-            //Vector2f generate_more_points = vertices[its_over_9000]; // generate the points 
-            Vector2f pick_random_vertex = vertices[randomSelection]; // picks a random location 
-            Vector2f last_point = points.back();    // gets the last element of a vector     
-            Vector2f calculate_midpoint = (pick_random_vertex + last_point) / 2.0f; // finds the midpoint 
-            points.push_back(calculate_midpoint);
-
-            ///calculate midpoint between random vertex and the last point in the vector
-            ///push back the newly generated coord.
-        }
-        // plays rainbow title text animation at title screen
         if (titleScreen && rainbowTimer.getElapsedTime().asSeconds() > rainbowDuration)
         {
             rainbowTimer.restart();
@@ -160,12 +138,41 @@ int main()
                 stars[i].setFillColor(Color(rand() % 256, rand() % 256, rand() % 256));
             }
         }
+
+        if (Keyboard::isKeyPressed(Keyboard::Escape))
+		{
+			window.close();
+		}
+        /*
+		****************************************
+		Update
+		****************************************
+		*/
+        if(points.size() > 0)
+        {
+
+            for (int i = 0; i < 50; i++)
+            {    
+            int randomSelection = uniform_dist(generator);
+           //Vector2f generate_more_points = vertices[its_over_9000]; // generate the points 
+            Vector2f pick_random_vertex = vertices[randomSelection]; // picks a random location 
+            Vector2f last_point = points.back();    // gets the last element of a vector     
+            Vector2f calculate_midpoint = (pick_random_vertex + last_point) / 2.0f; // finds the midpoint 
+            points.push_back(calculate_midpoint);
+            }
+            ///calculate midpoint between random vertex and the last point in the vector
+            ///push back the newly generated coord.
+        }
+        // plays rainbow title text animation at title screen
+        
         /*
 		****************************************
 		Draw
 		****************************************
 		*/
+
         window.clear();
+        window.draw();
 
         if (titleScreen)
         {

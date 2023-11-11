@@ -14,53 +14,10 @@ int main()
     // Create a video mode object
 	VideoMode vm(1920, 1080);
 	// Create and open a window for the game
-	RenderWindow window(vm, "Chaos Game!!", Style::Default);
+	RenderWindow window(vm, "Timber Game!!", Style::Default);
 
     vector<Vector2f> vertices;
     vector<Vector2f> points;
-
-        Font font;
-    if (!font.loadFromFile("MetroidFont.ttf")) {
-        // Displays message to user if font doesn't load
-        cout << "Error loading font!" << endl;
-        // returns error and exits program
-        return -1;
-    }
-
-    Text text;
-
-    text.setFont(font);
-    text.setCharacterSize(24); //sets text size
-    text.setFillColor(Color::White); // sets text color
-    text.setPosition(10, 10); //positions text
-
-    Text titleText;
-    
-    titleText.setFont(font);
-    titleText.setCharacterSize(250);
-    titleText.setFillColor(Color::Red);
-    titleText.setOutlineColor(Color::White);
-    titleText.setOutlineThickness(3);
-    titleText.setPosition(250, 140);
-    titleText.setString("Chaos Game");
-
-    Text shadowText;
-
-    shadowText.setFont(font);
-    shadowText.setCharacterSize(250);
-    shadowText.setFillColor(Color(112, 43, 34));
-    shadowText.setPosition(250, 160);
-    shadowText.setString("Chaos Game");
-
-    Text startText;
-
-    startText.setFont(font);
-    startText.setCharacterSize(75);
-    startText.setFillColor(Color::White);
-    startText.setPosition(530, 450);
-    startText.setString("Press Any Key to Play!");
-
-    bool titleScreen = true;
 
 	while (window.isOpen())
 	{
@@ -77,12 +34,6 @@ int main()
 				// Quit the game when the window is closed
 				window.close();
             }
-
-            if (event.type == Event::KeyPressed && titleScreen)
-            {
-                titleScreen = false;
-            }
-
             if (event.type == sf::Event::MouseButtonPressed)
             {
                 if (event.mouseButton.button == sf::Mouse::Left)
@@ -127,25 +78,13 @@ int main()
 		****************************************
 		*/
         window.clear();
-
-        if (titleScreen)
+        for(int i = 0; i < vertices.size(); i++)
         {
-            window.draw(shadowText);
-            window.draw(titleText);
-            window.draw(startText);
-        }
-        else 
-        {
-            for(int i = 0; i < vertices.size(); i++)
-            {
             RectangleShape rect(Vector2f(10,10));
             rect.setPosition(Vector2f(vertices[i].x, vertices[i].y));
             rect.setFillColor(Color::Blue);
             window.draw(rect);
-            }
-
         }
-
         window.display();
     }
 }

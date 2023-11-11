@@ -5,6 +5,8 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <random>
+
 
 // Make code easier to type with "using namespace"
 using namespace sf;
@@ -20,6 +22,10 @@ int main()
     vector<Vector2f> vertices;
     vector<Vector2f> points;
     vector<CircleShape> stars;
+
+    default_random_engine generator; // picks between 1 of the 3 points A, B, C --> website Gabe: https://www.sfml-dev.org/tutorials/1.6/system-random.php <--   
+    uniform_int_distribution<int> uniform_dist(0, 2); // Website Gabe: --> https://en.cppreference.com/w/cpp/numeric/random <-- // Between the 3 points (0, 1, 2 and look at 1st example)
+
 
     // loads font into program
     Font font;
@@ -127,6 +133,10 @@ int main()
 		*/
         if(points.size() > 0)
         {
+
+            int randomSelection = uniform_dist(generator);
+
+            
             ///generate more point(s)
             ///select random vertex
             ///calculate midpoint between random vertex and the last point in the vector

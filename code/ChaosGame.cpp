@@ -154,7 +154,6 @@ int main()
             for (int i = 0; i < 50; i++)
             {    
             int randomSelection = uniform_dist(generator);
-           //Vector2f generate_more_points = vertices[its_over_9000]; // generate the points 
             Vector2f pick_random_vertex = vertices[randomSelection]; // picks a random location 
             Vector2f last_point = points.back();    // gets the last element of a vector     
             Vector2f calculate_midpoint = (pick_random_vertex + last_point) / 2.0f; // finds the midpoint 
@@ -172,7 +171,13 @@ int main()
 		*/
 
         window.clear();
-        window.draw();
+        // need to draw the actual triangle here
+        // we've got the math for it I think but just need to loop through now drawing it 
+        // we've doing this from mid-point to mid-point from the video we watched 
+        // I think the professor has this broken up here for logic reasons 
+
+        //STOPPED HERE AT 10:20 PM - This is where I think we need the loop to make the triangles into a shape 
+
 
         if (titleScreen)
         {

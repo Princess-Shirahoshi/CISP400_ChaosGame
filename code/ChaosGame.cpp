@@ -7,7 +7,6 @@
 #include <vector>
 #include <random>
 
-
 // Make code easier to type with "using namespace"
 using namespace sf;
 using namespace std;
@@ -23,8 +22,8 @@ int main()
     vector<Vector2f> points;
     vector<CircleShape> stars;
 
-    default_random_engine generator; // picks between 1 of the 3 points A, B, C --> website Gabe: https://www.sfml-dev.org/tutorials/1.6/system-random.php <--   
-    uniform_int_distribution<int> uniform_dist(0, 2); // Website Gabe: --> https://en.cppreference.com/w/cpp/numeric/random <-- // Between the 3 points (0, 1, 2 and look at 1st example)
+    default_random_engine generator; // picks between 1 of the 3 points A, B, C --> website Gabe: https://www.sfml-dev.org/tutorials/1.6/system-random.php <-- 
+    uniform_int_distribution<int> uniform_dist(0, 2);
 
 
     // loads font into program
@@ -111,18 +110,44 @@ int main()
                         vertices.push_back(Vector2f(event.mouseButton.x, event.mouseButton.y));
                     }
                     //right now user has to click 3 times for blue dots, and then another time to initiate the matrix
-                    else if(points.size() == 0 && step == 1 && vertices.size() >= 3)
+                    else if(points.size() == 0)
                     {
                         ///fourth click
                         ///push back to points vector
                         step = 2;
+
+                        points.push_back(Vector2f(event.mouseButton.x, event.mouseButton.y));
 
                         
                     }
                 }
             }
         }
-
+        if (Keyboard::isKeyPressed(Keyboard::Escape))
+		{
+			window.close();
+		}
+        /*
+		****************************************
+		Update
+		****************************************
+		*/
+        if(points.size() > 0)
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                int randomSelection = uniform_dist(generator); // picks a random location 
+                Vector2f pick_random_vertex = vertices[randomSelection]; // gets the last element of a vector
+                Vector2f last_point = points.back();
+                Vector2f calculate_midpoint = (pick_random_vertex + last_point) / 2.0f; //finds the midpoint
+                points.push_back(calculate_midpoint);
+            }
+            ///generate more point(s)
+            ///select random vertex
+            ///calculate midpoint between random vertex and the last point in the vector
+            ///push back the newly generated coord.
+        }
+        // plays rainbow title text animation at title screen
         if (titleScreen && rainbowTimer.getElapsedTime().asSeconds() > rainbowDuration)
         {
             rainbowTimer.restart();
@@ -138,46 +163,12 @@ int main()
                 stars[i].setFillColor(Color(rand() % 256, rand() % 256, rand() % 256));
             }
         }
-
-        if (Keyboard::isKeyPressed(Keyboard::Escape))
-		{
-			window.close();
-		}
-        /*
-		****************************************
-		Update
-		****************************************
-		*/
-        if(points.size() > 0)
-        {
-
-            for (int i = 0; i < 50; i++)
-            {    
-            int randomSelection = uniform_dist(generator);
-            Vector2f pick_random_vertex = vertices[randomSelection]; // picks a random location 
-            Vector2f last_point = points.back();    // gets the last element of a vector     
-            Vector2f calculate_midpoint = (pick_random_vertex + last_point) / 2.0f; // finds the midpoint 
-            points.push_back(calculate_midpoint);
-            }
-            ///calculate midpoint between random vertex and the last point in the vector
-            ///push back the newly generated coord.
-        }
-        // plays rainbow title text animation at title screen
-        
         /*
 		****************************************
 		Draw
 		****************************************
 		*/
-
         window.clear();
-        // need to draw the actual triangle here
-        // we've got the math for it I think but just need to loop through now drawing it 
-        // we've doing this from mid-point to mid-point from the video we watched 
-        // I think the professor has this broken up here for logic reasons 
-
-        //STOPPED HERE AT 10:20 PM - This is where I think we need the loop to make the triangles into a shape 
-
 
         if (titleScreen)
         {
@@ -200,8 +191,22 @@ int main()
         }
         else if (step == 1)
         {
-            text.setString("STEP 1: CLICK TO ADD 3 STARTING POINTS ON SCREEN, \n THEN CLICK AGAIN TO CREATE IMAGE."); 
+            text.setString("CLICK TO ADD 3 STARTING POINTS ON SCREEN, \n THEN CLICK AGAIN TO CREATE IMAGE."); 
             window.draw(text);
+        }
+        else
+        {
+            text.setString("ENJOY THE FRACTAL PATTERN!\nPRESS 'ESC' TO EXIT WHEN DONE"); 
+            window.draw(text);
+            
+            //Draws the fractal points
+            for (size_t i = 0; i < points.size(); ++i)
+            {
+                CircleShape point(2);
+                point.setPosition(points[i]);
+                point.setFillColor(Color::White);
+                window.draw(point);
+            }
         }
 
         for (int i = 0; i < vertices.size(); i++)
@@ -214,4 +219,4 @@ int main()
 
         window.display();
     }
-}
+} 

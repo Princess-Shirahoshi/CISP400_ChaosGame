@@ -22,9 +22,9 @@ int main()
     vector<Vector2f> points;
     vector<CircleShape> stars;
     vector<sf::Color> colors = {
-    sf::Color::Red,
-    sf::Color::Green,
-    sf::Color::Blue,
+    sf::Color::Magenta,
+    sf::Color::Transparent,
+    sf::Color::Cyan,
 };
     size_t colorIndex = 0;
 

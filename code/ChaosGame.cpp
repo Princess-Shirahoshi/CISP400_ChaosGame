@@ -29,7 +29,7 @@ int main()
     size_t colorIndex = 0;
 
     default_random_engine generator; // picks between 1 of the 3 points A, B, C --> website Gabe: https://www.sfml-dev.org/tutorials/1.6/system-random.php <-- 
-    uniform_int_distribution<int> uniform_dist(0, 2);
+    uniform_int_distribution<int> uniform_dist(0, 5);
 
 
     // loads font into program
@@ -107,15 +107,17 @@ int main()
             {
                 if (event.mouseButton.button == sf::Mouse::Left)
                 {
-                    std::cout << "the left button was pressed" << std::endl;
-                    std::cout << "mouse x: " << event.mouseButton.x << std::endl;
-                    std::cout << "mouse y: " << event.mouseButton.y << std::endl;
+                    
 
-                    if(vertices.size() < 3)
+                    if(vertices.size() < 6)
                     {
+                        std::cout << "the left button was pressed" << std::endl;
+                        std::cout << "mouse x: " << event.mouseButton.x << std::endl;
+                        std::cout << "mouse y: " << event.mouseButton.y << std::endl;
+
                         vertices.push_back(Vector2f(event.mouseButton.x, event.mouseButton.y));
                     }
-                    //right now user has to click 3 times for blue dots, and then another time to initiate the matrix
+                    //right now user has to click 6 times for blue dots, and then another time to initiate the matrix
                     else if(points.size() == 0)
                     {
                         ///fourth click
@@ -145,8 +147,12 @@ int main()
                 int randomSelection = uniform_dist(generator); // picks a random location 
                 Vector2f pick_random_vertex = vertices[randomSelection]; // gets the last element of a vector
                 Vector2f last_point = points.back();
-                Vector2f calculate_midpoint = (pick_random_vertex + last_point) / 2.0f; //finds the midpoint
-                points.push_back(calculate_midpoint);
+
+                Vector2f direction = pick_random_vertex - last_point;
+
+                Vector2f new_point = last_point + (2.0f / 3.0f) * direction; //finds the midpoint
+
+                points.push_back(new_point);
             }
             ///generate more point(s)
             ///select random vertex
@@ -197,7 +203,7 @@ int main()
         }
         else if (step == 1)
         {
-            text.setString("CLICK TO ADD 3 STARTING POINTS ON SCREEN, \n THEN CLICK AGAIN TO CREATE IMAGE."); 
+            text.setString("CLICK TO ADD 6 STARTING POINTS ON SCREEN, \n THEN CLICK AGAIN TO CREATE IMAGE."); 
             window.draw(text);
         }
         else
@@ -205,14 +211,6 @@ int main()
             text.setString("ENJOY THE FRACTAL PATTERN!\nPRESS 'ESC' TO EXIT WHEN DONE"); 
             window.draw(text);
             
-            //Draws the fractal points
-            /*for (size_t i = 0; i < points.size(); ++i)
-            {
-                CircleShape point(2);
-                point.setPosition(points[i]);
-                point.setFillColor(Color::White);
-                window.draw(point);
-            }*/
             for (size_t i = 0; i < points.size(); ++i) {
             CircleShape point(2);
             point.setPosition(points[i]);

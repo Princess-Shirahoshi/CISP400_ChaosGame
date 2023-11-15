@@ -26,7 +26,7 @@ int main()
  
     vector<Color> colors = {
     Color::Magenta,
-    Color::Transparent,
+    Color::Yellow,
     Color::Cyan,
 };
     size_t colorIndex = 0; // index to keep track of the current colour from colors Vector (above)
